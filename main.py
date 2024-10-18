@@ -1,15 +1,9 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from utils import translate
+from utils.utils_att import translate as translate_ita
 import uvicorn, os
-from utils import load_checkpoint, load_objects
-from model import EncoderRNN, AttnDecoderRNN
-
-# Load objects
-input_lang, output_lang = load_objects('input_lang', 'output_lang')
-encoder = EncoderRNN(input_lang.n_words, 256).to('cpu')
-decoder = AttnDecoderRNN(256, output_lang.n_words).to('cpu')
-load_checkpoint(os.path.join(os.getcwd(), 'artifacts', 'checkpoint_epoch_100.pt'), encoder, decoder)
+from utils.utils_att import load_checkpoint, load_objects
+from utils.utils_trans import translate as translate_por
 
 # Initialize the app 
 app = FastAPI(title='Neural machine translation')
@@ -23,11 +17,14 @@ class TranslationResponse(BaseModel):
 async def home():
     return {'Hello I am youssef kamel'}
 
-@app.post("/translate/", response_model=TranslationResponse)
-async def translate_(request: TranslationRequest):
-    encoder.eval()
-    decoder.eval()
-    translated_sentence= translate(request.text)
+@app.post("/translate_ita/", response_model=TranslationResponse)
+async def translate1(request: TranslationRequest):
+    translated_sentence= translate_ita(request.text)
+    return TranslationResponse(translation=translated_sentence)
+
+@app.post("/translate_por/", response_model=TranslationResponse)
+async def translate2(request: TranslationRequest):
+    translated_sentence = translate_por(request.text)
     return TranslationResponse(translation=translated_sentence)
 
 if __name__ == "__main__":
