@@ -30,7 +30,6 @@ LANGUAGE_DICT = {
 # Set page config at the very beginning
 st.set_page_config(page_title="Multilingual Translator", page_icon="🌐", layout="wide")
 
-
 # Initialize the model name
 model_name = "facebook/m2m100_418M"
 
@@ -70,7 +69,10 @@ def detect_language(text: str) -> Optional[str]:
     except:
         st.error("Unable to detect the language. Please try a longer text or check the input.")
         return None
-    
+
+# Display a welcome message
+st.success("Welcome to the Google Machine Translation")
+
 st.title("🌍 Multilingual to English Translator 🌎")
 
 input_text = st.text_area("Enter text to translate:", height=150)
@@ -98,7 +100,7 @@ if st.button("Translate"):
             st.info(f"Detected language: {LANGUAGE_DICT[detected_lang]}")
 
         with st.spinner("Translating..."):
-            translated_text = translate(input_text, detected_lang,target_lang)
+            translated_text = translate(input_text, detected_lang, target_lang)
 
         # Display translation with a green border
         if translated_text:
