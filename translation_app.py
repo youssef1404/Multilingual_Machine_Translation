@@ -4,6 +4,12 @@ import time
 from langdetect import detect, DetectorFactory  # type: ignore
 from typing import Tuple, Optional
 
+# Attempt to import required libraries
+try:
+    from transformers import M2M100ForConditionalGeneration, M2M100Tokenizer
+except ImportError:
+    st.error("Required libraries are not installed. Please run: pip install transformers")
+    st.stop()
 
 # Dictionary mapping language codes to full names
 LANGUAGE_DICT = {
@@ -24,12 +30,6 @@ LANGUAGE_DICT = {
 # Set page config at the very beginning
 st.set_page_config(page_title="Multilingual Translator", page_icon="🌐", layout="wide")
 
-# Attempt to import required libraries
-try:
-    from transformers import M2M100ForConditionalGeneration, M2M100Tokenizer
-except ImportError:
-    st.error("Required libraries are not installed. Please run: pip install transformers")
-    st.stop()
 
 # Initialize the model name
 model_name = "facebook/m2m100_418M"
@@ -50,7 +50,7 @@ model, tokenizer = load_model()
 if model is None or tokenizer is None:
     st.stop()
 
-def translate(text, src_lang,target_lang):
+def translate(text, src_lang, target_lang):
     try:
         tokenizer.src_lang = src_lang  # Set the detected source language
         encoded_input = tokenizer(text, return_tensors="pt")
@@ -58,8 +58,8 @@ def translate(text, src_lang,target_lang):
 
         #Decode the translated text
         translated_text = tokenizer.decode(generated_tokens[0], skip_special_tokens=True)
-
         return translated_text
+
     except Exception as e:
         st.error(f"Translation error: {str(e)}")
         return ""
@@ -96,6 +96,7 @@ if st.button("Translate"):
 
         else:
             st.info(f"Detected language: {LANGUAGE_DICT[detected_lang]}")
+
         with st.spinner("Translating..."):
             translated_text = translate(input_text, detected_lang,target_lang)
 
