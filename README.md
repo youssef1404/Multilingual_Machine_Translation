@@ -17,7 +17,8 @@ This project focuses on developing machine translation models that translate mul
     - We developed a transformer-based model specifically for translating **Portuguese into English**. This required handling tokenization, positional encodings, and multi-head self-attention mechanisms manually.
 
 3. **Pretrained Model (m2m100_418M):**  
-   For the final phase, we switched to the **facebook/m2m100_418M** pretrained model, which can handle **language detection and translation** across multiple languages.
+ 
+    - For the final phase, we switched to the **facebook/m2m100_418M** pretrained model, which can handle **language detection and translation** across multiple languages.
     - **Language Detection:**  
       We utilized the pretrained **m2m100_418M** model to detect the source language of the input text.
     - **Translation:**  
