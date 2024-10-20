@@ -2,7 +2,7 @@
 
 This project focuses on developing machine translation models that translate multiple languages into English. We explored various architectures and approaches for this purpose, starting with encoder-decoder models with attention, experimenting with transformers from scratch, and finally leveraging a pretrained model for language detection and translation. The deployment of different models was carried out using **FastAPI** and **Streamlit**.
 
----
+-------
 ## **Approach and Methods**
 
 1. **Custom Model Development:**
