@@ -49,11 +49,12 @@ model, tokenizer = load_model()
 if model is None or tokenizer is None:
     st.stop()
 
-def translate(text, src_lang, target_lang):
+
+def translate(text, src_lang):
     try:
         tokenizer.src_lang = src_lang  # Set the detected source language
         encoded_input = tokenizer(text, return_tensors="pt")
-        generated_tokens = model.generate(**encoded_input, forced_bos_token_id=tokenizer.get_lang_id(target_lang))
+        generated_tokens = model.generate(**encoded_input, forced_bos_token_id=tokenizer.get_lang_id('en'))
 
         #Decode the translated text
         translated_text = tokenizer.decode(generated_tokens[0], skip_special_tokens=True)
@@ -100,7 +101,7 @@ if st.button("Translate"):
             st.info(f"Detected language: {LANGUAGE_DICT[detected_lang]}")
 
         with st.spinner("Translating..."):
-            translated_text = translate(input_text, detected_lang, target_lang)
+            translated_text = translate(input_text, detected_lang)
 
         # Display translation with a green border
         if translated_text:
