@@ -125,15 +125,15 @@ col3, col4, col5 = st.columns(3)
 with col3:
     st.metric(label="Average Translation Time", value="1-2 seconds")
 with col4:
-    st.metric(label="Supported Languages", value="50+")
+    st.metric(label="Supported Languages", value="100+")
 with col5:
     st.metric(label="Model Parameters", value="418M")
 
 st.markdown("---")
 st.markdown("## 💡 Did you know?")
 fun_facts = [
-    "This translator supports over 50 different languages!",
-    "The model used for translation has 610 million parameters.",
+    "This translator supports over 100 different languages!",
+    "The model used for translation has 418 million parameters.",
     "Machine translation has come a long way since its inception in the 1950s.",
     "Neural machine translation, like the one used here, often outperforms traditional statistical methods.",
 ]
